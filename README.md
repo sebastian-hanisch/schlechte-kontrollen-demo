@@ -1,5 +1,7 @@
 # Schlechte Kontrollen: wo eine Variable im Diagramm sitzt – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-schlechte-kontrollen-demo.streamlit.app/)**
+
 Viertes Stück der Linie **Kausale Diagramme und Adjustierung** in der „Konzepte“-Reihe im Portfolio von [Sebastian Hanisch](https://sebastianhanisch.net) (Operations Research und Machine Learning). Nachfolger von [backdoor-demo](https://github.com/sebastian-hanisch/backdoor-demo): Dort stand, welche Mengen die Hintertüren schließen. Hier steht, welche Variablen man besser nicht aufnimmt, und warum „alles Verfügbare kontrollieren“ keine Regel ist.
 
 ## Kernfrage
@@ -95,4 +97,4 @@ Streamlit Cloud: Python 3.12.
 
 Gebaut mit Streamlit, Plotly, numpy, pandas und fpdf2.
 
-Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zu den Demos: [Interaktive Demos](https://sebastianhanisch.net/demos.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Kausale Diagramme: von Konfundierung bis Wahl](https://sebastianhanisch.net/konzepte-kausale-diagramme.html).
