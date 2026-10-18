@@ -28,14 +28,14 @@ Alle Zahlen stehen in `tests/test_claims.py`; Einstellung, wenn nicht anders gen
 | Frage | Befund | Test |
 |---|---|---|
 | Standard-Stichprobe (Mediator, Seed 35) | Wahre Wirkung 0,86 (0,5 direkt + 0,6 · 0,6 über den Bestand). Ohne Kontrolle 0,92, mit dem Bestand 0,52; der Fehler im Grenzfall ist **−0,36**, das sind 42 % der Wirkung. | `test_default_sample_and_verdict` |
-| Wann hilft Festhalten? | Nur beim Confounder: Fehler +0,26 ohne, 0 mit. Alle anderen neun Stellungen sind neutral oder verschlechtern die Schätzung. | `test_population_table_of_the_ten_structures` |
-| Wie ändern Mediator und Collider die Schätzung? | Mediator: 0,86 → 0,50 (Fehler −0,36). Collider: 0 → −0,40. Die Deckung des 95-%-Intervalls fällt von rund 95 % auf **0 %**. | `test_population_table_of_the_ten_structures`, `test_zoo_coverage` |
-| Wie ändert sich die Genauigkeit? | Präzisionsvariable: Standardfehler ×0,86, Instrument ohne Störung: ×1,17, Nachfahre der Wirkung: ×0,89; Fehler dabei 0 bzw. −0,13. | `test_standard_error_factors` |
-| Nachfahren | Nachfahre des Colliders −0,13, der Wirkung −0,13, des Mediators −0,10; Deckung 98 → 18 %, 96 → 6 %, 93 → 53 %. | `test_zoo_coverage` |
-| Wie groß ist der M-Bias? | Bei gleicher Kantenstärke **1 bis 36 %** des Confounding-Fehlers (s = 0,1 bis 0,9); bei s = 0,6 liegt er bei −0,06, die Deckung fällt von 94 auf 77 %. | `test_mbias_is_small`, `test_zoo_coverage` |
-| Schmetterling (Collider, der zugleich Confounder ist) | In 20 000 Ziehungen mit Kantenstärken ±0,1 bis ±0,9 liegt Kontrollieren in **92 %** näher an der Wahrheit; der Fehler ist im Median das 0,11fache, in 4,1 % mehr als das Doppelte. | `test_butterfly` |
-| Bias-Verstärkung | Instrument mit verborgener Störung: Fehler 0,21 ohne, 0,26 mit. Mit wachsender Stärke des Instruments (0 bis 1,8) wächst er auf das 1,00 / 1,07 / 1,26 / 1,60 / 2,06 / **3,38**fache. | `test_amplification` |
-| Faustregeln (3 000 Zufallsdiagramme, in 2 493 gibt es eine gültige Menge) | „Alle beobachteten Variablen“ ist nur in **17 %** gültig (413), „alle Nicht-Nachfahren von x“ in 99,6 % (2 483), das Disjunktivkriterium in **100 %** (2 493), die leere Menge in 80 % (1 989). In den 507 Fällen ohne gültige Menge findet keine Regel eine. | `test_rules_experiment` |
+| Wann hilft Festhalten? | Nur beim Confounder verschwindet die Verzerrung: Fehler +0,26 ohne, 0 mit. Alle anderen neun Stellungen sind beim Fehler neutral oder verschlechtern die Schätzung; die Präzisionsvariable macht sie genauer. | `test_population_table_of_the_ten_structures` |
+| Wie ändern Mediator und Collider die Schätzung? | Mediator: Koeffizient 0,86 (Gesamtwirkung) → 0,50 (nur der direkte Weg), Fehler 0 → −0,36. Collider: Fehler 0 → −0,40 (Koeffizient 0,50 → 0,10). Die Deckung des 95-%-Intervalls fällt von rund 95 % auf **0 %**. | `test_population_table_of_the_ten_structures`, `test_zoo_coverage` |
+| Wie ändert sich die Genauigkeit? | Präzisionsvariable: Standardfehler ×0,86, Instrument ohne Störung: ×1,17, Nachfahre der Wirkung: ×0,89; Fehler dabei 0 bzw. −0,13. Beim Nachfahren der Wirkung ist die Schätzung verzerrt und das Intervall deckt kaum noch, der kleinere Standardfehler ist dort kein Gewinn. | `test_standard_error_factors` |
+| Nachfahren | Nachfahre des Colliders −0,13, der Wirkung −0,13, des Mediators −0,10; Deckung 98 → 18 %, 96 → 6 %, 93 → 53 % (300 Wiederholungen; ohne Kontrolle sind nominal 95 % zu erwarten, die Abweichungen sind Zufall, mit Kontrolle liegen die Werte bei mehr Wiederholungen etwas höher). | `test_zoo_coverage` |
+| Wie groß ist der M-Bias? | Bei gleicher Kantenstärke **1 bis 36 %** des Confounding-Fehlers (s = 0,1 bis 0,9); bei s = 0,6 liegt er bei −0,06, die Deckung fällt von 94 auf 77 % (300 Wiederholungen, Zufallsschwankung von einigen Punkten). | `test_mbias_is_small`, `test_zoo_coverage` |
+| Schmetterling (Collider, der zugleich Confounder ist) | In 20 000 Ziehungen mit Kantenstärken ±0,1 bis ±0,9 liegt Kontrollieren in **92 %** näher an der Wahrheit; der Fehler ist im Median das 0,11fache, in 4,1 % mehr als das Doppelte. Das gilt für diese Verteilung der Kantenstärken; sind die Kanten in den Collider stark und die aus ihm heraus schwach, liegt Kontrollieren deutlich seltener näher. | `test_butterfly` |
+| Bias-Verstärkung | Instrument mit verborgener Störung: Fehler 0,21 ohne, 0,26 mit. Mit wachsender Stärke des Instruments (0 bis 1,8) ist der Fehler mit Kontrolle das 1,00 / 1,07 / 1,26 / 1,60 / 2,06 / **3,38**fache des Fehlers ohne Kontrolle: Der Fehler ohne sinkt von 0,26 auf 0,08, der mit Kontrolle bleibt bei 0,26. | `test_amplification` |
+| Faustregeln (3 000 Zufallsdiagramme, in 2 493 gibt es eine gültige Menge) | „Alle beobachteten Variablen“ ist nur in **17 %** gültig (413), „alle Nicht-Nachfahren von x“ in 99,6 % (2 483), das Disjunktivkriterium in **100 %** (2 493), die leere Menge in 80 % (1 989). In den 507 Fällen ohne gültige Menge findet keine Regel eine. Die Prozente gelten für diese Zufallsfamilie und sind bedingt auf „es gibt eine gültige Menge“; die 100 % des Disjunktivkriteriums sind ein Satz, den die Messung bestätigt. | `test_rules_experiment` |
 
 ## Ehrliche Grenzen
 
@@ -52,7 +52,7 @@ Die Zahlen gelten für diese erfundene Welt und für Zufallsdiagramme dieser Gen
 
 ## Bezug zu den Nachbarn im Portfolio
 
-- [backdoor-demo](https://github.com/sebastian-hanisch/backdoor-demo): liefert Kriterium und Adjustierungsformel; die Faustregel „alle anderen Variablen“ ist dort nur in 14 % der Diagramme gültig, hier steht das Warum je Stellung.
+- [backdoor-demo](https://github.com/sebastian-hanisch/backdoor-demo): liefert Kriterium und Adjustierungsformel; die Faustregel „alle anderen Variablen“ ist dort nur in 14 % der Zufallsdiagramme gültig, hier steht das Warum je Stellung.
 - [d-separation-demo](https://github.com/sebastian-hanisch/d-separation-demo): liefert Pfade und Blockierungsgründe; `dsep_graph.py` ist wortgleich übernommen.
 - [konfundierung-demo](https://github.com/sebastian-hanisch/konfundierung-demo): zeigt, dass der naive Vergleich daneben liegt und die Schwankung als Kontrolle hilft.
 

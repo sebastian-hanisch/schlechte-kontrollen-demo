@@ -164,8 +164,12 @@ def verdict_instance(a: Analysis) -> tuple[str, str]:
 def verdict_zoo(rows: list) -> tuple[str, str]:
     bad = [r for r in rows if r["effects"].kind in ("schadet", "verstärkt")]
     good = [r for r in rows if r["effects"].kind == "hilft"]
-    return "info", (f"Von {len(rows)} Strukturen helfen {len(good)} der Schätzung, {len(bad)} schaden oder verstärken die Verzerrung; die übrigen sind neutral oder rechnen "
-                    f"teilweise heraus. Die Deckung fällt bei Mediator und Collider von rund 95 % auf {de(100 * max(r['cover_with'] for r in rows if r['key'] in ('mediator', 'collider')), 0)} %.")
+    rest = [r for r in rows if r["effects"].kind not in ("schadet", "verstärkt", "hilft")]
+    if any(r["effects"].kind == "rechnet teilweise heraus" for r in rest):
+        tail = "die übrigen sind neutral oder rechnen teilweise heraus"
+    else:
+        tail = f"die übrigen {len(rest)} sind beim Fehler neutral (genauer oder ungenauer)"
+    return "info", (f"Von {len(rows)} Strukturen helfen {len(good)} der Schätzung, {len(bad)} schaden oder verstärken die Verzerrung; {tail}. Die Deckung fällt bei Mediator und Collider von rund 95 % auf {de(100 * max(r['cover_with'] for r in rows if r['key'] in ('mediator', 'collider')), 0)} %.")
 
 
 def verdict_mbias(rows: list, butterfly: dict) -> tuple[str, str]:
@@ -178,7 +182,7 @@ def verdict_mbias(rows: list, butterfly: dict) -> tuple[str, str]:
 def verdict_amplification(rows: list) -> tuple[str, str]:
     r = next(r for r in rows if abs(r["a"] - 0.6) < 1e-9)
     big = rows[-1]
-    return "warning", (f"Mit der Stärke a = {de(r['a'], 1)} des Instruments wächst der Fehler auf das {de(r['factor'], 2)}fache, bei a = {de(big['a'], 1)} auf das "
+    return "warning", (f"Mit der Stärke a = {de(r['a'], 1)} des Instruments ist der Fehler mit Kontrolle das {de(r['factor'], 2)}fache des Fehlers ohne, bei a = {de(big['a'], 1)} das "
                        f"{de(big['factor'], 2)}fache: Je mehr harmlose Streuung des Faktors das Instrument bindet, desto größer ist der Anteil der verborgenen Störung am Rest.")
 
 

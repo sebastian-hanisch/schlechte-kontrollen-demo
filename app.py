@@ -184,11 +184,11 @@ st.caption("Oben die M-Struktur gegen den Confounding-Fehler bei gleicher Kanten
 st.plotly_chart(build_mbias_chart(rows2), width="stretch", key="mbias_chart")
 verdict(verdict_mbias(rows2, butterfly))
 st.caption(f"Im Schmetterling ist der Fehler mit Kontrolle im Median {de(butterfly['median_ratio'], 2)}-mal so groß wie ohne; in {de(100 * butterfly['share_double'], 1)} % der "
-           "Ziehungen ist er mehr als doppelt so groß. Kontrollieren ist dort fast immer der bessere Zug.")
+           "Ziehungen ist er mehr als doppelt so groß. Das gilt für diese Verteilung der Kantenstärken; sind die Kanten in den Collider stark und die aus ihm heraus schwach, liegt Kontrollieren deutlich seltener näher.")
 
 st.subheader("🔬 Experiment 3: Wenn das Instrument die Verzerrung verstärkt")
 rows3 = _amplification()
-st.caption("Standortqualität U bewegt Faktor und Servicegrad (verborgen); das Instrument I bewegt nur den Faktor. Je stärker das Instrument, desto stärker der Fehler.")
+st.caption("Standortqualität U bewegt Faktor und Servicegrad (verborgen); das Instrument I bewegt nur den Faktor. Je stärker das Instrument, desto mehr verschlechtert das Mitführen den Fehler gegenüber dem Weglassen.")
 st.plotly_chart(build_amplification_chart(rows3), width="stretch", key="amplification_chart")
 verdict(verdict_amplification(rows3))
 st.dataframe([{"Stärke des Instruments": de(r["a"], 1), "Fehler ohne": signed(r["without"], 3), "Fehler mit": signed(r["with"], 3), "Faktor": de(r["factor"], 2)}
