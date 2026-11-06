@@ -93,6 +93,17 @@ Weiter unten: vier Experimente (**🔬**), **🚧 Wo die Annahmen enden** und de
 """
 )
 
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/schlechte-kontrollen-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+Ein Planer vergibt an Standorten einen **Sicherheitsfaktor** und will wissen, wie stark er den Servicegrad hebt. Dazu hält er weitere Variablen fest, rechnet sie also heraus. Die Demo zeigt an zehn kleinen Diagrammen, dass mehr Festhalten nicht besser ist. Es kommt darauf an, **wo die Variable im Diagramm sitzt**. Eine gemeinsame Ursache von Faktor und Servicegrad festzuhalten hilft. Ein **Mediator** auf dem Weg nimmt einen Teil der Wirkung weg. Ein **Collider**, die Folge beider, öffnet einen Pfad, den es vorher nicht gab. Manche Variablen ändern nur die Genauigkeit. Alles ist simuliert, daher kennt die Demo die Wahrheit und zeigt den Fehler jeder Wahl.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/schlechte-kontrollen-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
+
 with st.expander("So liest man die Stellung", expanded=True):
     st.markdown(
         """
@@ -228,6 +239,25 @@ st.markdown(
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/schlechte-kontrollen-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben ist ein Diagramm mit Behandlung $x$, Wirkung $y$ und einer weiteren Variable $Z$. Gesucht ist, ob der Koeffizient von $x$ die wahre Wirkung besser trifft, wenn man $Z$ in die Regression von $y$ aufnimmt.
+
+| Symbol | Bedeutung |
+|---|---|
+| $x$, $y$ | Behandlung (in der Demo der Sicherheitsfaktor) und Wirkung (der Servicegrad) |
+| $Z$ | die festgehaltene Kontrolle, deren Stellung im Diagramm wechselt |
+| $B$ | Matrix der Kantenstärken des linearen Modells $V = BV + \varepsilon$ |
+| $\Sigma$ | Kovarianzmatrix aller Variablen, aus $B$ berechnet |
+| $T_{yx}$ | wahre Wirkung von $x$ auf $y$ (Summe der Pfadprodukte) |
+| $\beta_{yx\cdot Z}$ | Koeffizient von $x$ in der Regression von $y$ auf $x$ und $Z$ im Grenzfall |
+| $b$, $R^2$ | Fehler ohne Instrument, Varianzanteil von $x$, den das Instrument erklärt |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/schlechte-kontrollen-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Modell.** Ein linearer Graph $V = BV + \varepsilon$ mit Einheitsrauschen, $\Sigma = (I-B)^{-1}(I-B)^{-\top}$, Gesamtwirkungen $T = (I-B)^{-1} - I$. Die **wahre
